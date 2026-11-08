@@ -1,0 +1,7 @@
+FORMULARIO DE CONTACTO (sin hosting, sin base de datos)
+1. Entra a https://web3forms.com y pulsa "Create your Access Key".
+2. Escribe publi.citypublicidad@hotmail.com. Te llega un correo con tu clave (revisa spam).
+3. Abre js/contacto-config.js y reemplaza PEGA_AQUI_TU_CLAVE por esa clave.
+4. Prueba el formulario. Los mensajes llegan a ese correo.
+Si el envio falla, el formulario ofrece enviar el mensaje por WhatsApp ya escrito.
+Para publicar gratis: arrastra la carpeta a https://app.netlify.com/drop
