@@ -1,0 +1,29 @@
+PUBLICITY - Web completa
+Abre index.html en el navegador.
+index.html  -> la pagina
+css/        -> estilos
+js/         -> main.js (animaciones) y data.js (servicios, trabajos y catalogo)
+img/        -> TODAS las imagenes, por carpeta (logo, servicios, trabajos, catalogo, clientes)
+favicon.ico -> icono de la pestana (logo de Publicity)
+Cada imagen se usa una sola vez en toda la web.
+
+v4: css/v4.css + js/fx.js -> pluma vectorial que se dibuja al bajar, marcas de corte, regla y lectura CMYK, tono de fondo continuo por scroll, modo oscuro (sigue el sistema) con transicion circular, botones con brillo/ondas/confeti.
+
+v4.11: PERSONALIZADOR 3D (seccion #personaliza). js/studio3d.js (motor Three.js) + css/studio.css.
+- Productos del personalizador: 65, con nombres genéricos (sin marcas), agrupados por categoría como en un catálogo de promocionales: esferos, agendas, botilitos y termos, mugs y vasos, vajilla, llaveros, textil, sombrillas, identificación, tecnología, juguetes y gran formato. Están en la lista PR de js/studio3d.js.
+- Para agregar un producto: copia uno de la lista PR en js/studio3d.js y cambia sus medidas/caras.
+- ENVIAR POR WHATSAPP: sin formulario. Genera una imagen JPG (4 vistas) y en el celular abre el menú de compartir (elige WhatsApp, el número destino se elige en el chat). En computador la descarga, la copia al portapapeles y abre WhatsApp Web para pegarla (Ctrl+V). Número en WA dentro de studio3d.js.
+- Necesita internet para cargar Three.js (cdnjs).
+
+v4.22-4.24: panel de productos del personalizador con contadores y lista completa; corregido choque de clase .st; Agendas y libretas primero; paginas legales, aviso de cookies, Google Analytics y Pixel de Meta (ver LEEME-LEGAL.txt).
+
+v4.25: CONTADOR DE VISITAS (pildora fija abajo a la izquierda, odometro animado y en vivo). css/visitas.css + js/visitas.js; configuracion en js/visitas-config.js (cambia "espacio" por un nombre propio).
+v4.25.4: boton flotante de Instagram encima del de WhatsApp (enlace a @publi.citypublicidad).
+
+v4.26: CHATBOT (asistente virtual). Boton redondo con el logo de Publicity, encima del de Instagram. css/chatbot.css + js/chatbot.js (motor) + js/chatbot-data.js (TODAS las respuestas).
+- Funciona sin servidor ni claves: corre en el navegador y no guarda ni envia lo que escribe la persona. Si no sabe algo, ofrece preguntarlo por WhatsApp con la pregunta ya escrita.
+- Para cambiar una respuesta o un dato: edita js/chatbot-data.js (campo "a"). Para que entienda mas formas de preguntar: agrega palabras a "kw".
+- Los productos y categorias del catalogo y los trabajos se leen solos de js/data.js.
+- Datos que la web NO publica y el bot no inventa: direccion, horario, ciudad, precios, minimos. Si los quieres en las respuestas, agregalos en los temas "ubicacion", "precios" y "sin-dato".
+- GUIA-CHATBOT.md: resumen legible de todo lo que sabe el asistente.
+- En index.html se agregaron 3 lineas: chatbot.css, chatbot-data.js y chatbot.js.
