@@ -1,0 +1,75 @@
+PUBLICITY - Web completa
+Abre index.html en el navegador.
+index.html  -> la pagina
+css/        -> estilos
+js/         -> main.js (animaciones) y data.js (servicios, trabajos y catalogo)
+img/        -> TODAS las imagenes, por carpeta (logo, servicios, trabajos, catalogo, clientes)
+favicon.ico -> icono de la pestana (logo de Publicity)
+Cada imagen se usa una sola vez en toda la web.
+
+v4: css/v4.css + js/fx.js -> pluma vectorial que se dibuja al bajar, marcas de corte, regla y lectura CMYK, tono de fondo continuo por scroll, modo oscuro (sigue el sistema) con transicion circular, botones con brillo/ondas/confeti.
+
+v4.11: PERSONALIZADOR 3D (seccion #personaliza). js/studio3d.js (motor Three.js) + css/studio.css.
+- Productos del personalizador: 65, con nombres genéricos (sin marcas), agrupados por categoría como en un catálogo de promocionales: esferos, agendas, botilitos y termos, mugs y vasos, vajilla, llaveros, textil, sombrillas, identificación, tecnología, juguetes y gran formato. Están en la lista PR de js/studio3d.js.
+- Para agregar un producto: copia uno de la lista PR en js/studio3d.js y cambia sus medidas/caras.
+- ENVIAR POR WHATSAPP: sin formulario. Genera una imagen JPG (4 vistas) y en el celular abre el menú de compartir (elige WhatsApp, el número destino se elige en el chat). En computador la descarga, la copia al portapapeles y abre WhatsApp Web para pegarla (Ctrl+V). Número en WA dentro de studio3d.js.
+- Necesita internet para cargar Three.js (cdnjs).
+
+v4.22-4.24: panel de productos del personalizador con contadores y lista completa; corregido choque de clase .st; Agendas y libretas primero; paginas legales, aviso de cookies, Google Analytics y Pixel de Meta (ver LEEME-LEGAL.txt).
+
+v4.25: CONTADOR DE VISITAS (pildora fija abajo a la izquierda, odometro animado y en vivo). css/visitas.css + js/visitas.js; configuracion en js/visitas-config.js (cambia "espacio" por un nombre propio).
+v4.25.4: boton flotante de Instagram encima del de WhatsApp (enlace a @publi.citypublicidad).
+
+v4.26: CHATBOT (asistente virtual). Boton redondo con el logo de Publicity, encima del de Instagram. css/chatbot.css + js/chatbot.js (motor) + js/chatbot-data.js (TODAS las respuestas).
+- Funciona sin servidor ni claves: corre en el navegador y no guarda ni envia lo que escribe la persona. Si no sabe algo, ofrece preguntarlo por WhatsApp con la pregunta ya escrita.
+- Para cambiar una respuesta o un dato: edita js/chatbot-data.js (campo "a"). Para que entienda mas formas de preguntar: agrega palabras a "kw".
+- Los productos y categorias del catalogo y los trabajos se leen solos de js/data.js.
+- Datos que la web NO publica y el bot no inventa: direccion, horario, ciudad, precios, minimos. Si los quieres en las respuestas, agregalos en los temas "ubicacion", "precios" y "sin-dato".
+- GUIA-CHATBOT.md: resumen legible de todo lo que sabe el asistente.
+- En index.html se agregaron 3 lineas: chatbot.css, chatbot-data.js y chatbot.js.
+
+v4.27: CONTADOR DE VISITAS ARREGLADO + IMAGENES ORGANIZADAS POR CATEGORIA.
+- Contador: el servicio anterior (counterapi.dev v1) cerro el 7-ago-2026, por eso fallaba. Ahora usa Abacus (gratis, sin registro ni claves). Configuracion en js/visitas-config.js. Si el servicio no responde, muestra el ultimo valor real conocido (punto ambar) o se oculta; nunca muestra un numero inventado. El contador arranca desde cero; para continuar una cifra anterior usa "inicio".
+- Catalogo: los 67 productos estan agrupados por categoria (12 categorias, un titulo por bloque) y las fotos viven en img/catalogo/NN-categoria/.
+- Trabajos: los 26 trabajos estan agrupados en 5 categorias (un titulo por bloque) y las fotos viven en img/trabajos/NN-grupo/.
+- Ninguna foto se repite: el lightbox de un servicio muestra solo su imagen; el de un trabajo o producto solo muestra fotos de su misma categoria. Las tarjetas decorativas repetidas de la galeria se quitaron (queda una sola tarjeta "Cotizar" con v1.svg; v2.svg y v3.svg ya no se usan).
+- Para agregar un producto: pon su foto en la carpeta de su categoria y anade la linea en CAT (js/data.js) junto a las de su misma categoria.
+
+v4.28: CONTADOR = UNA VISITA POR DISPOSITIVO.
+- Antes la visita se recordaba solo por pestaña (sessionStorage), asi que cada ventana nueva sumaba otra vez.
+- Ahora cada navegador deja una marca permanente (localStorage: pub_vz_dev) y se cuenta una sola vez, aunque abra
+  varias pestanas, cierre y vuelva otro dia. Un candado (navigator.locks) evita doble conteo si abre dos ventanas a la vez.
+- Un dispositivo nuevo suma 1 y ve el total acumulado real (el total vive en el servicio Abacus, no en el navegador).
+- Modo dueno: abre la web con ?nocontar=1 y ese navegador no suma; ?nocontar=0 lo deshace.
+- Limites: otro navegador del mismo equipo, o incognito, cuenta como visitante nuevo. Abacus borra un contador si pasan
+  ~6 meses sin visitas nuevas (volveria a 0). Si algun dia necesitas garantia total, hay que usar un servidor propio.
+- cookies.html ahora lista pub_vz_dev y pub_vz_last.
+
+v4.29: MENU LATERAL PLEGABLE.
+- Los 7 botones de seccion (a la izquierda) ya no tapan el texto: arrancan ocultos y solo se ve una flechita pegada al borde.
+- Al pulsar la flecha se despliegan; se vuelven a plegar solos al elegir una seccion, al tocar fuera o con Escape.
+- Codigo: js/fx.js (boton .sdt y logica) + css/v4.css (estado .sd.cl). Para que arranque abierto, quita la clase "cl" y el atributo inert
+  de SD y llama sdSet(true) en vez de sdSet(false) en fx.js.
+
+v4.30: CONTADOR MAS RAPIDO.
+- La pildora aparece al instante (con el ultimo total guardado, o en estado "cargando") y se corrige en silencio cuando responde el servicio.
+- visitas.js se carga antes que Three.js (ya no espera a la libreria 3D); preconnect al servicio de conteo; timeout 4 s; giro 1,2 s.
+
+v4.31: CONTADOR EN MOVIL / TABLET (hasta 900 px).
+- La barra aparece al cargar la web y cuando entra una visita nueva (+N), se va hacia la izquierda y vuelve a aparecer al llegar al pie de la pagina (queda justo encima del pie, sin tapar texto).
+- Segundos visibles: "movilSegundos" en js/visitas-config.js (opcional, por defecto 5). En computador sigue fija como antes.
+
+v4.32: BOTON UNICO DE CONTACTO.
+- Asistente (chatbot), Instagram y WhatsApp se reunen en un solo boton (abajo a la derecha). Al pulsarlo se despliegan hacia arriba, con su nombre, y eliges el que quieras.
+- Se cierra solo al elegir, al tocar fuera o con Escape. Con el chat abierto todo se esconde; al cerrarlo vuelve el boton.
+- Archivos: css/fab.css + js/fab.js (va DESPUES de chatbot.js en index.html). Los 3 botones originales son los mismos elementos; solo se agrupan.
+- Para volver a los 3 botones sueltos: quita de index.html la linea de css/fab.css y la de js/fab.js.
+
+v4.36: FOTOS NUEVAS POR COINCIDENCIA VISUAL + GRUPO NUEVO "SEÑALIZACION Y PLACAS".
+- Se cargaron 37 fotos nuevas (img.rar) y cada una se comparo contra TODAS las imagenes del sitio (SIFT + revision visual):
+  - REEMPLAZAN la foto de una pieza que ya estaba (misma pieza): Tropezones y marcos para fotos, Piezas en madera personalizadas, Bolsa y caja personalizadas (Centrik Park), el servicio "Senalizacion de espacios" (tablero Calendario IVV) y "Libreta, esferos y estuche" (foto 1; la foto 2 es de la misma libreta con esferos y estuche).
+  - NUEVAS, colocadas en su contexto: 28 trabajos (pendones, roll-ups y stands -> Gran formato y ferias; tótem y muebles -> Avisos y exhibicion; Babaria, plegables TRIVAT y estuche SENA -> Empaques y papeleria; piezas personalizadas -> Marcacion y personalizados) y 2 productos del catalogo (Trofeos CET y Reconocimiento por anos de servicio -> Premios y reconocimientos).
+  - GRUPO NUEVO en Trabajos: "Senalizacion y placas" (carpeta img/trabajos/06-senalizacion-y-placas/), porque no existia un grupo donde encajaran las placas y la senalizacion vial.
+- Total ahora: 54 trabajos en 6 grupos y 69 productos en 12 categorias. Cada foto sigue apareciendo una sola vez.
+- Las fotos nuevas estan en WebP (lado mayor 1280 px). Se ajusto el orden de los trabajos dentro de cada grupo (menos Vinilos) para que las columnas queden parejas y las fotos no se recorten.
+- Para quitar una foto: borra su linea en js/data.js y el archivo; para cambiarla de grupo: cambia "g" y "c" en su linea y muevela de carpeta.

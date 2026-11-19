@@ -1,0 +1,67 @@
+/* ============================================================
+   PUBLICITY · BOTÓN ÚNICO DE CONTACTO
+   Reúne el Asistente, Instagram y WhatsApp en un solo botón.
+   Al pulsarlo se despliegan hacia arriba y eliges el que quieras.
+   Si js/fab.js no carga, no se aplica nada y los 3 botones quedan
+   sueltos como antes (todo depende de la clase html.fab-on).
+   ============================================================ */
+:root{--fs:62px;--fg:14px}
+@media(max-width:900px){:root{--fs:56px;--fg:12px}}
+
+/* ---- Botón principal ---- */
+.fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:94;width:var(--fs);height:var(--fs);padding:0;border:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:#fff;background:#15171a;box-shadow:0 10px 30px rgba(0,0,0,.35);-webkit-tap-highlight-color:transparent;transition:transform .35s var(--ease,cubic-bezier(.22,1,.36,1)),box-shadow .35s}
+.fab:hover{transform:scale(1.08) rotate(6deg);box-shadow:0 12px 34px rgba(0,180,238,.45)}
+.fab:active{transform:scale(.94)}
+.fab:focus-visible{outline:3px solid var(--ink,#e9ecef);outline-offset:3px}
+.fab:after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--m,#ec0e8f);animation:pu 2.4s ease-out infinite;pointer-events:none}
+.fab.on:after{animation:none;opacity:0}
+.fab-i{grid-area:1/1;pointer-events:none;transition:transform .45s var(--ease,cubic-bezier(.22,1,.36,1)),opacity .25s}
+.fab-logo{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.fab-x{width:28px;height:28px;opacity:0;transform:rotate(-90deg) scale(.5)}
+.fab.on .fab-logo{opacity:0;transform:rotate(90deg) scale(.5)}
+.fab.on .fab-x{opacity:1;transform:none}
+.fab-dot{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--m,#ec0e8f);border:2px solid var(--bg,#0b0c0e);display:grid;place-items:center;font:700 10px/1 "JetBrains Mono",monospace;color:#fff;pointer-events:none}
+.fab-dot[hidden],.fab.on .fab-dot{display:none}
+
+/* ---- Los 3 botones originales: guardados detrás del principal ---- */
+html.fab-on .wa,html.fab-on .ig,html.fab-on .cb{
+  right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:var(--fs);height:var(--fs);
+  animation:none;translate:0 0;scale:.4;opacity:0;visibility:hidden;pointer-events:none;
+  transition:translate .35s var(--ease,ease),scale .35s var(--ease,ease),opacity .25s,visibility 0s linear .35s,transform .3s var(--ease,ease),box-shadow .35s}
+html.fab-on .wa:after,html.fab-on .ig:after,html.fab-on .cb:after{display:none}
+/* lugar de cada uno al desplegar (de abajo hacia arriba) y retraso escalonado */
+html.fab-on .cb{--k:1;--o:0}
+html.fab-on .wa{--k:2;--o:70}
+html.fab-on .ig{--k:3;--o:140}
+
+/* ---- Desplegado ---- */
+html.fab-open .wa,html.fab-open .ig,html.fab-open .cb{
+  translate:0 calc(var(--k) * (var(--fs) + var(--fg)) * -1);scale:1;opacity:1;visibility:visible;pointer-events:auto;
+  transition:translate .5s var(--ease,ease) calc(var(--o) * 1ms),scale .5s var(--ease,ease) calc(var(--o) * 1ms),opacity .3s calc(var(--o) * 1ms),visibility 0s,transform .3s var(--ease,ease),box-shadow .35s}
+
+/* ---- Etiqueta con el nombre, a la izquierda de cada botón ---- */
+html.fab-on .wa:before,html.fab-on .ig:before,html.fab-on .cb:before{
+  position:absolute;right:calc(100% + 12px);top:50%;translate:10px -50%;padding:8px 14px;border-radius:999px;
+  background:var(--bg2,#17191c);color:var(--ink,#e9ecef);border:1px solid var(--line,rgba(233,236,239,.16));
+  font:600 14px/1 "Jost",system-ui,sans-serif;white-space:nowrap;box-shadow:0 8px 22px rgba(0,0,0,.28);
+  opacity:0;transition:opacity .2s,translate .35s var(--ease,ease)}
+html.fab-on .wa:before{content:"WhatsApp"}
+html.fab-on .ig:before{content:"Instagram"}
+html.fab-on .cb:before{content:"Asistente"}
+html.fab-open .wa:before,html.fab-open .ig:before,html.fab-open .cb:before{opacity:1;translate:0 -50%;transition:opacity .3s calc(var(--o) * 1ms + 120ms),translate .45s var(--ease,ease) calc(var(--o) * 1ms + 120ms)}
+
+/* ---- Globo "¿Tienes dudas?": ahora sobre el botón principal ---- */
+html.fab-on .cb-tip{right:20px;bottom:calc(20px + var(--fs) + 14px + env(safe-area-inset-bottom,0px))}
+html.fab-open .cb-tip{opacity:0;visibility:hidden;pointer-events:none}
+
+/* ---- Con el chat abierto todo se esconde (el chat ocupa ese rincón) ---- */
+html.fab-chat .fab-box{display:none}
+
+@media(prefers-reduced-motion:reduce){
+  .fab:after{animation:none}
+  .fab,.fab-i{transition:none}
+  html.fab-on .wa,html.fab-on .ig,html.fab-on .cb,
+  html.fab-open .wa,html.fab-open .ig,html.fab-open .cb,
+  html.fab-on .wa:before,html.fab-on .ig:before,html.fab-on .cb:before,
+  html.fab-open .wa:before,html.fab-open .ig:before,html.fab-open .cb:before{transition:none}
+}
